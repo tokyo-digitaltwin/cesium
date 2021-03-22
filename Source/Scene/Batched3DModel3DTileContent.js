@@ -6,7 +6,7 @@ import defined from "../Core/defined.js";
 import deprecationWarning from "../Core/deprecationWarning.js";
 import destroyObject from "../Core/destroyObject.js";
 import DeveloperError from "../Core/DeveloperError.js";
-import getStringFromTypedArray from "../Core/getStringFromTypedArray.js";
+import getJsonFromTypedArray from "../Core/getJsonFromTypedArray.js";
 import Matrix4 from "../Core/Matrix4.js";
 import RequestType from "../Core/RequestType.js";
 import RuntimeError from "../Core/RuntimeError.js";
@@ -296,12 +296,11 @@ function initialize(content, arrayBuffer, byteOffset) {
       BATCH_LENGTH: defaultValue(batchLength, 0),
     };
   } else {
-    var featureTableString = getStringFromTypedArray(
+    featureTableJson = getJsonFromTypedArray(
       uint8Array,
       byteOffset,
       featureTableJsonByteLength
     );
-    featureTableJson = JSON.parse(featureTableString);
     byteOffset += featureTableJsonByteLength;
   }
 
@@ -328,12 +327,11 @@ function initialize(content, arrayBuffer, byteOffset) {
     //
     // We could also make another request for it, but that would make the property set/get
     // API async, and would double the number of numbers in some cases.
-    var batchTableString = getStringFromTypedArray(
+    batchTableJson = getJsonFromTypedArray(
       uint8Array,
       byteOffset,
       batchTableJsonByteLength
     );
-    batchTableJson = JSON.parse(batchTableString);
     byteOffset += batchTableJsonByteLength;
 
     if (batchTableBinaryByteLength > 0) {
@@ -545,7 +543,7 @@ Batched3DModel3DTileContent.prototype.update = function (tileset, frameState) {
 
   // Update clipping planes
   var tilesetClippingPlanes = this._tileset.clippingPlanes;
-  this._model.clippingPlanesOriginMatrix = this._tileset.clippingPlanesOriginMatrix;
+  this._model.referenceMatrix = this._tileset.clippingPlanesOriginMatrix;
   if (defined(tilesetClippingPlanes) && this._tile.clippingPlanesDirty) {
     // Dereference the clipping planes from the model if they are irrelevant.
     // Link/Dereference directly to avoid ownership checks.
