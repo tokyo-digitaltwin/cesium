@@ -1257,6 +1257,10 @@ ImageryLayer.prototype._reprojectTexture = function (
         imagery.state = ImageryState.READY;
         imagery.releaseReference();
       },
+      canceled: function () {
+        imagery.state = ImageryState.TEXTURE_LOADED;
+        imagery.releaseReference();
+      },
     });
     this._reprojectComputeCommands.push(computeCommand);
   } else {
@@ -1290,6 +1294,11 @@ ImageryLayer.prototype.queueReprojectionCommands = function (frameState) {
  * @private
  */
 ImageryLayer.prototype.cancelReprojections = function () {
+  this._reprojectComputeCommands.forEach(function (command) {
+    if (defined(command.canceled)) {
+      command.canceled();
+    }
+  });
   this._reprojectComputeCommands.length = 0;
 };
 
