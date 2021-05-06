@@ -16,11 +16,30 @@
 - Avoided double-counting of `createImageBitmap` requests. There is an open Cesium PR: https://github.com/AnalyticalGraphicsInc/cesium/pull/8163
 - Modified FXAA shader to leave grey fragments alone to prevent blurring of text
 
+### 1.81 - 2021-05-01
+
+##### Fixes :wrench:
+
+- Fixed an issue where `Camera.flyTo` would not work properly with a non-WGS84 Ellipsoid. [#9498](https://github.com/CesiumGS/cesium/pull/9498)
+- Fixed an issue where setting the `ViewportQuad` rectangle after creating the viewport had no effect.[#9511](https://github.com/CesiumGS/cesium/pull/9511)
+- Fixed an issue where TypeScript was not picking up type defintions for `ArcGISTiledElevationTerrainProvider`. [#9522](https://github.com/CesiumGS/cesium/pull/9522)
+
+##### Deprecated :hourglass_flowing_sand:
+
+- `loadCRN` and `loadKTX` have been deprecated and will be removed in CesiumJS 1.82. They will be replaced with support for KTX2. [#9478](https://github.com/CesiumGS/cesium/pull/9478)
+
+### 1.80 - 2021-04-01
+
+##### Additions :tada:
+
+- Added support for drawing ground primitives on translucent 3D Tiles. [#9399](https://github.com/CesiumGS/cesium/pull/9399)
+
 ### 1.79.1 - 2021-03-01
 
 ##### Fixes :wrench:
 
 - Fixed a regression in 1.79 that broke terrain exaggeration. [#9397](https://github.com/CesiumGS/cesium/pull/9397)
+- Fixed an issue where interpolating certain small rhumblines with surface distance 0.0 would not return the expected result. [#9430](https://github.com/CesiumGS/cesium/pull/9430)
 
 ### 1.79 - 2021-03-01
 
