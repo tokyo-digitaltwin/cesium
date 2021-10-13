@@ -2177,7 +2177,6 @@ function loadWithHttpRequest(
     .end();
 }
 
-var noXMLHttpRequest = typeof XMLHttpRequest === "undefined";
 Resource._Implementations.loadWithXhr = function (
   url,
   responseType,
@@ -2195,6 +2194,8 @@ Resource._Implementations.loadWithXhr = function (
     return;
   }
 
+  var noXMLHttpRequest = typeof XMLHttpRequest === "undefined";
+
   if (noXMLHttpRequest) {
     loadWithHttpRequest(
       url,
@@ -2208,7 +2209,7 @@ Resource._Implementations.loadWithXhr = function (
     return;
   }
 
-  var xhr = new XMLHttpRequest();
+  var xhr = new window.XMLHttpRequest();
 
   if (TrustedServers.contains(url)) {
     xhr.withCredentials = true;

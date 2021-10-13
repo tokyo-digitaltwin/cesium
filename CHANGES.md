@@ -15,6 +15,7 @@
 - Added support for the `TERRIA_solid_outlines` extension to glTF.
 - Avoided double-counting of `createImageBitmap` requests. There is an open Cesium PR: https://github.com/AnalyticalGraphicsInc/cesium/pull/8163
 - Modified FXAA shader to leave grey fragments alone to prevent blurring of text
+- Moved `noXMLHttpRequest` check inside `Resource.loadWithXhr` to support `js-dom` Node.js usage
 
 ### 1.81 - 2021-05-01
 
