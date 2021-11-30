@@ -2209,7 +2209,7 @@ Resource._Implementations.loadWithXhr = function (
     return;
   }
 
-  var xhr = new window.XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
 
   if (TrustedServers.contains(url)) {
     xhr.withCredentials = true;
