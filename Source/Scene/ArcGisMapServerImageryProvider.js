@@ -87,7 +87,7 @@ import ImageryProvider from "./ImageryProvider.js";
  *
  *
  * @example
- * var esri = new Cesium.ArcGisMapServerImageryProvider({
+ * const esri = new Cesium.ArcGisMapServerImageryProvider({
  *     url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
  * });
  *
@@ -189,7 +189,7 @@ function ArcGisMapServerImageryProvider(options) {
    */
   this.defaultMagnificationFilter = undefined;
 
-  var resource = Resource.createIfNeeded(options.url);
+  const resource = Resource.createIfNeeded(options.url);
   resource.appendForwardSlash();
 
   if (defined(options.token)) {
@@ -223,7 +223,7 @@ function ArcGisMapServerImageryProvider(options) {
     ArcGisMapServerImageryProvider.DefaultParameters
   );
 
-  var credit = options.credit;
+  let credit = options.credit;
   if (typeof credit === "string") {
     credit = new Credit(credit);
   }
@@ -245,11 +245,11 @@ function ArcGisMapServerImageryProvider(options) {
   this._readyPromise = when.defer();
 
   // Grab the details of this MapServer.
-  var that = this;
-  var metadataError;
+  const that = this;
+  let metadataError;
 
   function metadataSuccess(data) {
-    var tileInfo = data.tileInfo;
+    const tileInfo = data.tileInfo;
     if (!that._usePreCachedTilesIfAvailable || !defined(tileInfo)) {
       that._useTiles = false;
     } else {
@@ -268,10 +268,7 @@ function ArcGisMapServerImageryProvider(options) {
           ellipsoid: options.ellipsoid,
         });
       } else {
-        var message =
-          "Tile spatial reference WKID " +
-          data.tileInfo.spatialReference.wkid +
-          " is not supported.";
+        const message = `Tile spatial reference WKID ${data.tileInfo.spatialReference.wkid} is not supported.`;
         metadataError = TileProviderError.handleError(
           metadataError,
           that,
@@ -295,9 +292,9 @@ function ArcGisMapServerImageryProvider(options) {
             data.fullExtent.spatialReference.wkid === 102100 ||
             data.fullExtent.spatialReference.wkid === 102113
           ) {
-            var projection = new WebMercatorProjection();
-            var extent = data.fullExtent;
-            var sw = projection.unproject(
+            const projection = new WebMercatorProjection();
+            const extent = data.fullExtent;
+            const sw = projection.unproject(
               new Cartesian3(
                 Math.max(
                   extent.xmin,
@@ -310,7 +307,7 @@ function ArcGisMapServerImageryProvider(options) {
                 0.0
               )
             );
-            var ne = projection.unproject(
+            const ne = projection.unproject(
               new Cartesian3(
                 Math.min(
                   extent.xmax,
@@ -337,10 +334,7 @@ function ArcGisMapServerImageryProvider(options) {
               data.fullExtent.ymax
             );
           } else {
-            var extentMessage =
-              "fullExtent.spatialReference WKID " +
-              data.fullExtent.spatialReference.wkid +
-              " is not supported.";
+            const extentMessage = `fullExtent.spatialReference WKID ${data.fullExtent.spatialReference.wkid} is not supported.`;
             metadataError = TileProviderError.handleError(
               metadataError,
               that,
@@ -387,8 +381,7 @@ function ArcGisMapServerImageryProvider(options) {
   }
 
   function metadataFailure(e) {
-    var message =
-      "An error occurred while accessing " + that._resource.url + ".";
+    const message = `An error occurred while accessing ${that._resource.url}.`;
     metadataError = TileProviderError.handleError(
       metadataError,
       that,
@@ -403,12 +396,12 @@ function ArcGisMapServerImageryProvider(options) {
   }
 
   function requestMetadata() {
-    var resource = that._resource.getDerivedResource({
+    const resource = that._resource.getDerivedResource({
       queryParameters: {
         f: "json",
       },
     });
-    var metadata = resource.fetchJsonp();
+    const metadata = resource.fetchJsonp();
     when(metadata, metadataSuccess, metadataFailure);
   }
 
@@ -435,39 +428,27 @@ function ArcGisMapServerImageryProvider(options) {
 ArcGisMapServerImageryProvider.DefaultParameters = {};
 
 function buildImageResource(imageryProvider, x, y, level, request) {
-  var resource;
+  let resource;
   if (imageryProvider._useTiles) {
     resource = imageryProvider._resource.getDerivedResource({
-      url:
-        "tile/" +
-        level +
-        "/" +
-        y +
-        "/" +
-        x +
-        (Object.keys(imageryProvider.parameters).length > 0
-          ? "?" + objectToQuery(imageryProvider.parameters)
-          : ""),
+      url: `tile/${level}/${y}/${x}` +
+      (Object.keys(imageryProvider.parameters).length > 0
+        ? "?" + objectToQuery(imageryProvider.parameters)
+        : ""),
       request: request,
     });
   } else {
-    var nativeRectangle = imageryProvider._tilingScheme.tileXYToNativeRectangle(
+    const nativeRectangle = imageryProvider._tilingScheme.tileXYToNativeRectangle(
       x,
       y,
       level
     );
-    var bbox =
-      nativeRectangle.west +
-      "," +
-      nativeRectangle.south +
-      "," +
-      nativeRectangle.east +
-      "," +
-      nativeRectangle.north;
 
-    var query = combine(imageryProvider.parameters, {
+    const bbox = `${nativeRectangle.west},${nativeRectangle.south},${nativeRectangle.east},${nativeRectangle.north}`;
+
+    const query = combine(imageryProvider.parameters, {
       bbox: bbox,
-      size: imageryProvider._tileWidth + "," + imageryProvider._tileHeight,
+      size: `${imageryProvider._tileWidth},${imageryProvider._tileHeight}`,
       format: "png32",
       transparent: true,
       f: "image",
@@ -483,7 +464,7 @@ function buildImageResource(imageryProvider, x, y, level, request) {
       query.imageSR = 3857;
     }
     if (imageryProvider.layers) {
-      query.layers = "show:" + imageryProvider.layers;
+      query.layers = `show:${imageryProvider.layers}`;
     }
 
     resource = imageryProvider._resource.getDerivedResource({
@@ -881,17 +862,17 @@ ArcGisMapServerImageryProvider.prototype.pickFeatures = function (
     return undefined;
   }
 
-  var rectangle = this._tilingScheme.tileXYToNativeRectangle(x, y, level);
+  const rectangle = this._tilingScheme.tileXYToNativeRectangle(x, y, level);
 
-  var horizontal;
-  var vertical;
-  var sr;
+  let horizontal;
+  let vertical;
+  let sr;
   if (this._tilingScheme.projection instanceof GeographicProjection) {
     horizontal = CesiumMath.toDegrees(longitude);
     vertical = CesiumMath.toDegrees(latitude);
     sr = "4326";
   } else {
-    var projected = this._tilingScheme.projection.project(
+    const projected = this._tilingScheme.projection.project(
       new Cartographic(longitude, latitude, 0.0)
     );
     horizontal = projected.x;
@@ -899,46 +880,39 @@ ArcGisMapServerImageryProvider.prototype.pickFeatures = function (
     sr = "3857";
   }
 
-  var layers = "visible";
+  let layers = "visible";
   if (defined(this._layers)) {
-    layers += ":" + this._layers;
+    layers += `:${this._layers}`;
   }
 
-  var query = combine(this.parameters, {
+  const query = combine(this.parameters, {
     f: "json",
     tolerance: 2,
     geometryType: "esriGeometryPoint",
-    geometry: horizontal + "," + vertical,
-    mapExtent:
-      rectangle.west +
-      "," +
-      rectangle.south +
-      "," +
-      rectangle.east +
-      "," +
-      rectangle.north,
-    imageDisplay: this._tileWidth + "," + this._tileHeight + ",96",
+    geometry: `${horizontal},${vertical}`,
+    mapExtent: `${rectangle.west},${rectangle.south},${rectangle.east},${rectangle.north}`,
+    imageDisplay: `${this._tileWidth},${this._tileHeight},96`,
     sr: sr,
     layers: layers,
   });
 
-  var resource = this._resource.getDerivedResource({
+  const resource = this._resource.getDerivedResource({
     url: "identify",
     queryParameters: query,
   });
 
   return resource.fetchJson().then(function (json) {
-    var result = [];
+    const result = [];
 
-    var features = json.results;
+    const features = json.results;
     if (!defined(features)) {
       return result;
     }
 
-    for (var i = 0; i < features.length; ++i) {
-      var feature = features[i];
+    for (let i = 0; i < features.length; ++i) {
+      const feature = features[i];
 
-      var featureInfo = new ImageryLayerFeatureInfo();
+      const featureInfo = new ImageryLayerFeatureInfo();
       featureInfo.data = feature;
       featureInfo.name = feature.value;
       featureInfo.properties = feature.attributes;
@@ -946,7 +920,7 @@ ArcGisMapServerImageryProvider.prototype.pickFeatures = function (
 
       // If this is a point feature, use the coordinates of the point.
       if (feature.geometryType === "esriGeometryPoint" && feature.geometry) {
-        var wkid =
+        const wkid =
           feature.geometry.spatialReference &&
           feature.geometry.spatialReference.wkid
             ? feature.geometry.spatialReference.wkid
@@ -958,7 +932,7 @@ ArcGisMapServerImageryProvider.prototype.pickFeatures = function (
             feature.geometry.z
           );
         } else if (wkid === 102100 || wkid === 900913 || wkid === 3857) {
-          var projection = new WebMercatorProjection();
+          const projection = new WebMercatorProjection();
           featureInfo.position = projection.unproject(
             new Cartesian3(
               feature.geometry.x,

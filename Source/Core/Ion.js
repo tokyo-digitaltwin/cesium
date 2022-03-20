@@ -2,9 +2,9 @@ import Credit from "./Credit.js";
 import defined from "./defined.js";
 import Resource from "./Resource.js";
 
-var defaultTokenCredit;
-var defaultAccessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2N2NjZjU1MS02ZDE5LTRjYzAtYjg0Zi0wODc2YjMxNGE1ZWEiLCJpZCI6MjU5LCJpYXQiOjE2MjAwNDczMDl9.159vCWIGDh0dexF393wvC4zUCbq4oZg6VkPAB5U6tg0";
+let defaultTokenCredit;
+const defaultAccessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZGZiNTI0Zi1lNTVmLTQ1ZjktODIzNS0yYjQ5ODg4MDk0NTAiLCJpZCI6MjU5LCJpYXQiOjE2NDYxNDYyMzB9.OZ0mWuymsiF9cR10FR_rZTMD7kA_FE7-uUGW6J7wBU4";
 /**
  * Default settings for accessing the Cesium ion API.
  *
@@ -19,7 +19,7 @@ var defaultAccessToken =
  * @see createWorldTerrain
  * @namespace Ion
  */
-var Ion = {};
+const Ion = {};
 
 /**
  * Gets or sets the default Cesium ion access token.
@@ -42,7 +42,7 @@ Ion.getDefaultTokenCredit = function (providedKey) {
   }
 
   if (!defined(defaultTokenCredit)) {
-    var defaultTokenMessage =
+    const defaultTokenMessage =
       '<b> \
             This application is using Cesium\'s default ion access token. Please assign <i>Cesium.Ion.defaultAccessToken</i> \
             with an access token from your ion account before making any Cesium API calls. \
