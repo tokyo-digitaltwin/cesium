@@ -384,24 +384,24 @@ gulp.task("combineRelease", gulp.series("build", combineRelease));
 gulp.task("prepare", function (done) {
   // Copy Draco3D files from node_modules into Source
   fs.copyFileSync(
-    "node_modules/draco3d/draco_decoder_nodejs.js",
+    require.resolve("draco3d/draco_decoder_nodejs.js"),
     "Source/ThirdParty/Workers/draco_decoder_nodejs.js"
   );
   fs.copyFileSync(
-    "node_modules/draco3d/draco_decoder.wasm",
+    require.resolve("draco3d/draco_decoder.wasm"),
     "Source/ThirdParty/draco_decoder.wasm"
   );
   // Copy pako and zip.js worker files to Source/ThirdParty
   fs.copyFileSync(
-    "node_modules/pako/dist/pako_inflate.min.js",
+    require.resolve("pako/dist/pako_inflate.min.js"),
     "Source/ThirdParty/Workers/pako_inflate.min.js"
   );
   fs.copyFileSync(
-    "node_modules/pako/dist/pako_deflate.min.js",
+    require.resolve("pako/dist/pako_deflate.min.js"),
     "Source/ThirdParty/Workers/pako_deflate.min.js"
   );
   fs.copyFileSync(
-    "node_modules/@zip.js/zip.js/dist/z-worker-pako.js",
+    require.resolve("@zip.js/zip.js/dist/z-worker-pako.js"),
     "Source/ThirdParty/Workers/z-worker-pako.js"
   );
   done();
@@ -1942,6 +1942,6 @@ gulp.task("terria-copy-cesium-assets", function () {
 
 gulp.task(
   "terria-prepare-cesium",
-  gulp.series("build", "terria-copy-cesium-assets", "build-ts")
+  gulp.series("prepare", "build", "terria-copy-cesium-assets", "build-ts")
 );
 gulp.task("terria-default", gulp.series("terria-prepare-cesium"));
