@@ -94,7 +94,7 @@ function ArcGISTiledElevationTerrainProvider(options) {
     })
     .then(function (metadata) {
       const copyrightText = metadata.copyrightText;
-      if (defined(copyrightText)) {
+      if (defined(copyrightText) && !defined(that._credit)) {
         that._credit = new Credit(copyrightText);
       }
 
@@ -213,7 +213,6 @@ Object.defineProperties(ArcGISTiledElevationTerrainProvider.prototype, {
    * the source of the terrain.  This function should not be called before {@link ArcGISTiledElevationTerrainProvider#ready} returns true.
    * @memberof ArcGISTiledElevationTerrainProvider.prototype
    * @type {Credit}
-   * @readonly
    */
   credit: {
     get: function () {
@@ -226,6 +225,9 @@ Object.defineProperties(ArcGISTiledElevationTerrainProvider.prototype, {
       //>>includeEnd('debug');
       return this._credit;
     },
+    set: function (value) {
+      this._credit = value;
+    }
   },
 
   /**
