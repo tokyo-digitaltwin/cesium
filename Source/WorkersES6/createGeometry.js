@@ -13,7 +13,7 @@ function getModule(moduleName) {
   if (!defined(module)) {
     if (typeof exports === "object") {
       // Use CommonJS-style require.
-      moduleCache[module] = module = reqWithContext(`./Workers/${moduleName}`);
+      moduleCache[module] = module = reqWithContext(`./${moduleName}`);
     } else {
       // Use AMD-style require.
       // in web workers, require is synchronous
