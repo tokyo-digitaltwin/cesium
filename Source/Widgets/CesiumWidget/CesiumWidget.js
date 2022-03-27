@@ -21,10 +21,6 @@ import SkyBox from "../../Scene/SkyBox.js";
 import Sun from "../../Scene/Sun.js";
 import getElement from "../getElement.js";
 
-function getDefaultSkyBoxUrl(suffix) {
-  return buildModuleUrl(`Assets/Textures/SkyBox/tycho2t3_80_${suffix}.jpg`);
-}
-
 function startRenderLoop(widget) {
   widget._renderLoopRunning = true;
 
@@ -304,12 +300,12 @@ function CesiumWidget(container, options) {
     if (!defined(skyBox)) {
       skyBox = new SkyBox({
         sources: {
-          positiveX: getDefaultSkyBoxUrl("px"),
-          negativeX: getDefaultSkyBoxUrl("mx"),
-          positiveY: getDefaultSkyBoxUrl("py"),
-          negativeY: getDefaultSkyBoxUrl("my"),
-          positiveZ: getDefaultSkyBoxUrl("pz"),
-          negativeZ: getDefaultSkyBoxUrl("mz"),
+          positiveX: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_px.jpg"),
+          negativeX: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_mx.jpg"),
+          positiveY: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_py.jpg"),
+          negativeY: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_my.jpg"),
+          positiveZ: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_pz.jpg"),
+          negativeZ: require("terriajs-cesium/Source/Assets/Textures/SkyBox/tycho2t3_80_mz.jpg"),
         },
       });
     }
