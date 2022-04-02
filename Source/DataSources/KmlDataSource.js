@@ -3359,7 +3359,9 @@ function loadKmz(
   sourceResource,
   screenOverlayContainer
 ) {
-  const zWorkerUrl = buildModuleUrl("./ThirdParty/Workers/z-worker-pako.js");
+  const zWorker = require("worker-loader!../ThirdParty/Workers/z-worker-pako.js");
+  // zWorker.terminate();
+  const zWorkerUrl = require.resolve("worker-loader!../ThirdParty/Workers/z-worker-pako.js");
   zip.configure({
     workerScripts: {
       deflate: [zWorkerUrl, "./pako_deflate.min.js"],

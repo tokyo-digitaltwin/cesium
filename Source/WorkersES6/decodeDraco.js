@@ -363,19 +363,20 @@ function decodeDraco(event) {
   const wasmConfig = data.webAssemblyConfig;
   if (defined(wasmConfig)) {
     // Require and compile WebAssembly module, or use fallback if not supported
-    return require([wasmConfig.modulePath], function (dracoModule) {
-      if (defined(wasmConfig.wasmBinaryFile)) {
-        if (!defined(dracoModule)) {
-          dracoModule = self.DracoDecoderModule;
-        }
+    //return require([wasmConfig.modulePath], function (dracoModule) {
+    const dracoModule = require("../ThirdParty/Workers/draco_decoder_nodejs");
 
-        dracoModule(wasmConfig).then(function (compiledModule) {
-          initWorker(compiledModule);
-        });
-      } else {
-        initWorker(dracoModule());
+    if (defined(wasmConfig.wasmBinaryFile)) {
+      if (!defined(dracoModule)) {
+        dracoModule = self.DracoDecoderModule;
       }
-    });
+
+      dracoModule(wasmConfig).then(function (compiledModule) {
+        initWorker(compiledModule);
+      });
+    } else {
+      initWorker(dracoModule());
+    }
   }
 }
 export default decodeDraco;

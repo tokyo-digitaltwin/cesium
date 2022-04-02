@@ -158,7 +158,7 @@ function getWebAssemblyLoaderConfig(processor, wasmOptions) {
   const requireWasmWrapper = require.context(
     "../ThirdParty/Workers",
     false,
-    /.*wasm_wrapper\.js$/
+    /.*draco_decoder_nodejs\.js$/
   );
   const requireWasm = require.context("../ThirdParty", false, /\.wasm$/);
 
