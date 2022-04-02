@@ -3359,13 +3359,20 @@ function loadKmz(
   sourceResource,
   screenOverlayContainer
 ) {
-  const zWorker = require("worker-loader!../ThirdParty/Workers/z-worker-pako.js");
-  // zWorker.terminate();
-  const zWorkerUrl = require.resolve("worker-loader!../ThirdParty/Workers/z-worker-pako.js");
+  const zWorkerPakoUrl = require("file-loader!../ThirdParty/Workers/z-worker-pako.js");
+  const inflateUrl = require("file-loader!../ThirdParty/Workers/pako_inflate.min.js");
+  const deflateUrl = require("file-loader!../ThirdParty/Workers/pako_deflate.min.js");
+
+  // zip annoyingly requires the inflateUrl and deflateUrl to be relative to the zWorkerPakoUrl.
+  // To do that, we need to go via absolute URLs
+  const absoluteBase = new Uri(zWorkerPakoUrl).absoluteTo(location.href);
+  const relativeInflateUri = new Uri(deflateUrl).absoluteTo(location.href).relativeTo(absoluteBase);
+  const relativeDeflateUri = new Uri(inflateUrl).absoluteTo(location.href).relativeTo(absoluteBase);
+
   zip.configure({
     workerScripts: {
-      deflate: [zWorkerUrl, "./pako_deflate.min.js"],
-      inflate: [zWorkerUrl, "./pako_inflate.min.js"],
+      deflate: [zWorkerPakoUrl, relativeInflateUri.toString()],
+      inflate: [zWorkerPakoUrl, relativeDeflateUri.toString()],
     },
   });
 
