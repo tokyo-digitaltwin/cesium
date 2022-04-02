@@ -60,6 +60,7 @@ import DepthFunction from "./DepthFunction.js";
 import DracoLoader from "./DracoLoader.js";
 import getClipAndStyleCode from "./getClipAndStyleCode.js";
 import getClippingFunction from "./getClippingFunction.js";
+import hasExtension from "./hasExtension.js";
 import HeightReference from "./HeightReference.js";
 import JobType from "./JobType.js";
 import ModelAnimationCache from "./ModelAnimationCache.js";
