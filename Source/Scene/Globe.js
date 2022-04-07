@@ -732,7 +732,7 @@ Globe.prototype.pickWorldCoordinates = function (
 
   sphereIntersections.sort(createComparePickTileFunction(ray.origin));
 
-  var intersection;
+  let intersection;
   length = sphereIntersections.length;
   for (i = 0; i < length; ++i) {
     intersection = sphereIntersections[i].data.pick(

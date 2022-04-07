@@ -221,9 +221,9 @@ GlobeSurfaceTile.prototype.pickTriangle = function (
     var i1 = indices[i + 1];
     var i2 = indices[i + 2];
 
-    var v0 = getPosition(encoding, mode, projection, vertices, i0, scratchV0);
-    var v1 = getPosition(encoding, mode, projection, vertices, i1, scratchV1);
-    var v2 = getPosition(encoding, mode, projection, vertices, i2, scratchV2);
+    const v0 = getPosition(encoding, mode, projection, vertices, i0, scratchV0);
+    const v1 = getPosition(encoding, mode, projection, vertices, i1, scratchV1);
+    const v2 = getPosition(encoding, mode, projection, vertices, i2, scratchV2);
 
     var intersection = IntersectionTests.rayTriangle(
       ray,
