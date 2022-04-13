@@ -41,7 +41,7 @@ import ClippingPlaneCollection from "./ClippingPlaneCollection.js";
 import DepthFunction from "./DepthFunction.js";
 import GlobeSurfaceTile from "./GlobeSurfaceTile.js";
 import ImageryLayer from "./ImageryLayer.js";
-import ImagerySplitDirection from "./ImagerySplitDirection.js";
+import SplitDirection from "./SplitDirection.js";
 import ImageryState from "./ImageryState.js";
 import PerInstanceColorAppearance from "./PerInstanceColorAppearance.js";
 import Primitive from "./Primitive.js";
@@ -90,7 +90,7 @@ function GlobeSurfaceTileProvider(options) {
   this.dynamicAtmosphereLightingFromSun = false;
   this.showGroundAtmosphere = false;
   this.shadows = ShadowMode.RECEIVE_ONLY;
-  this.splitDirection = ImagerySplitDirection.NONE;
+  this.splitDirection = SplitDirection.NONE;
 
   /**
    * The color to use to highlight terrain fill tiles. If undefined, fill tiles are not
@@ -2250,7 +2250,7 @@ function addDrawCommandsForTile(tileProvider, tile, frameState) {
   surfaceShaderSetOptions.hasGeodeticSurfaceNormals = hasGeodeticSurfaceNormals;
   surfaceShaderSetOptions.hasExaggeration = hasExaggeration;
   surfaceShaderSetOptions.splitTerrain =
-    tileProvider.splitDirection !== ImagerySplitDirection.NONE;
+    tileProvider.splitDirection !== SplitDirection.NONE;
 
   const tileImageryCollection = surfaceTile.imagery;
   let imageryIndex = 0;

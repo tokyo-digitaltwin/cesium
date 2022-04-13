@@ -11,7 +11,7 @@ import VertexFormat from "../Core/VertexFormat.js";
 import BufferUsage from "../Renderer/BufferUsage.js";
 import DrawCommand from "../Renderer/DrawCommand.js";
 import RenderState from "../Renderer/RenderState.js";
-import ImagerySplitDirection from "./ImagerySplitDirection.js";
+import SplitDirection from "./SplitDirection.js";
 import ShaderProgram from "../Renderer/ShaderProgram.js";
 import ShaderSource from "../Renderer/ShaderSource.js";
 import VertexArray from "../Renderer/VertexArray.js";
@@ -108,13 +108,13 @@ function SkyAtmosphere(ellipsoid) {
   this.brightnessShift = 0.0;
 
   /**
-   * The {@link ImagerySplitDirection} to apply, showing the terrain only on
+   * The {@link SplitDirection} to apply, showing the terrain only on
    * the left or right of the splitter control.
    *
-   * @type {ImagerySplitDirection}
-   * @default {@link ImagerySplitDirection.NONE}
+   * @type {SplitDirection}
+   * @default {@link SplitDirection.NONE}
    */
-  this.splitDirection = ImagerySplitDirection.NONE;
+  this.splitDirection = SplitDirection.NONE;
   this._splitDirection = undefined;
 
   this._hueSaturationBrightness = new Cartesian3();
@@ -249,8 +249,11 @@ SkyAtmosphere.prototype.update = function (frameState, globe) {
   }
 
   // Note that the splitDirection flag requires _two_ bits.
-  const splitDirectionFlag = this.splitDirection === 0 ? 0 : this.splitDirection < 0.0 ? 1 : 2;
-  const flags = colorCorrect | (perFragmentAtmosphere << 2) | (translucent << 3) || (splitDirectionFlag << 4);
+  const splitDirectionFlag =
+    this.splitDirection === 0 ? 0 : this.splitDirection < 0.0 ? 1 : 2;
+  const flags =
+    colorCorrect | (perFragmentAtmosphere << 2) | (translucent << 3) ||
+    splitDirectionFlag << 4;
 
   if (flags !== this._flags) {
     this._flags = flags;
@@ -269,7 +272,7 @@ SkyAtmosphere.prototype.update = function (frameState, globe) {
       defines.push("GLOBE_TRANSLUCENT");
     }
 
-    if (this.splitDirection !== ImagerySplitDirection.NONE) {
+    if (this.splitDirection !== SplitDirection.NONE) {
       defines.push("SPLIT_ATMOSPHERE");
     }
 

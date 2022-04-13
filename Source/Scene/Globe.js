@@ -10,7 +10,7 @@ import DeveloperError from "../Core/DeveloperError.js";
 import Ellipsoid from "../Core/Ellipsoid.js";
 import EllipsoidTerrainProvider from "../Core/EllipsoidTerrainProvider.js";
 import Event from "../Core/Event.js";
-import ImagerySplitDirection from "./ImagerySplitDirection.js";
+import SplitDirection from "./SplitDirection.js";
 import IntersectionTests from "../Core/IntersectionTests.js";
 import NearFarScalar from "../Core/NearFarScalar.js";
 import Ray from "../Core/Ray.js";
@@ -269,13 +269,13 @@ function Globe(ellipsoid) {
   this.shadows = ShadowMode.RECEIVE_ONLY;
 
   /**
-   * The {@link ImagerySplitDirection} to apply, showing the terrain only on
+   * The {@link SplitDirection} to apply, showing the terrain only on
    * the left or right of the splitter control.
    *
-   * @type {ImagerySplitDirection}
-   * @default {@link ImagerySplitDirection.NONE}
+   * @type {SplitDirection}
+   * @default {@link SplitDirection.NONE}
    */
-  this.splitDirection = ImagerySplitDirection.NONE;
+  this.splitDirection = SplitDirection.NONE;
 
   /**
    * The hue shift to apply to the atmosphere. Defaults to 0.0 (no shift).

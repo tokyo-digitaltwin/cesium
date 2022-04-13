@@ -652,7 +652,8 @@ Object.defineProperties(UrlTemplateImageryProvider.prototype, {
  */
 UrlTemplateImageryProvider.prototype.reinitialize = function (options) {
   const that = this;
-  that._readyPromise = Promise.resolve(options).then(function (properties) {
+
+  function setProperties(properties) {
     //>>includeStart('debug', pragmas.debug);
     if (!defined(properties)) {
       throw new DeveloperError("options is required.");
@@ -720,7 +721,13 @@ UrlTemplateImageryProvider.prototype.reinitialize = function (options) {
     that._pickFeaturesTags = allPickFeaturesTags;
 
     return true;
-  });
+  }
+
+  if (typeof options.then === "function") {
+    that._readyPromise = options.then(setProperties);
+  } else {
+    that._readyPromise = Promise.resolve(setProperties(options));
+  }
 };
 
 /**
