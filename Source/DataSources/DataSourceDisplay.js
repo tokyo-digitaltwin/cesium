@@ -439,7 +439,11 @@ DataSourceDisplay.prototype._onDataSourceAdded = function (
 
   primitives.add(entityCluster);
 
-  var visualizers = this._visualizersCallback(scene, entityCluster, dataSource);
+  const visualizers = this._visualizersCallback(
+    scene,
+    entityCluster,
+    dataSource
+  );
 
   dataSource._visualizersByDisplayID = dataSource._visualizersByDisplayID || {};
   dataSource._visualizersByDisplayID[this._displayID] = visualizers;

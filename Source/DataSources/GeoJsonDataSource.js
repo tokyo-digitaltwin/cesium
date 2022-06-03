@@ -45,7 +45,7 @@ let defaultStroke = Color.YELLOW;
 let defaultStrokeWidth = 2;
 let defaultFill = Color.fromBytes(255, 255, 0, 100);
 let defaultClampToGround = false;
-let defaultHeightReference = HeightReference.NONE;
+const defaultHeightReference = HeightReference.NONE;
 
 const sizes = {
   small: 24,
