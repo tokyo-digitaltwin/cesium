@@ -574,8 +574,6 @@ function unwrapInterval(type, czmlInterval, sourceUri) {
       );
     case Quaternion:
       return unwrapQuaternionInterval(czmlInterval);
-    case Rectangle:
-      return unwrapRectangleInterval(czmlInterval);
     case Rotation:
       return defaultValue(czmlInterval.number, czmlInterval);
     case ShadowMode:
@@ -591,6 +589,8 @@ function unwrapInterval(type, czmlInterval, sourceUri) {
       return StripeOrientation[
         defaultValue(czmlInterval.stripeOrientation, czmlInterval)
       ];
+    case Rectangle:
+      return unwrapRectangleInterval(czmlInterval);
     case Uri:
       return unwrapUriInterval(czmlInterval, sourceUri);
     case VerticalOrigin:

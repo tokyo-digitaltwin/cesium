@@ -1004,7 +1004,7 @@ ImageryLayer.prototype._requestImagery = function (imagery) {
         .then(function () {
           doRequest();
         })
-        .otherwise(failureWithoutRetry);
+        .catch(failureWithoutRetry);
       return;
     }
 
