@@ -2,7 +2,6 @@ import defaultValue from "./defaultValue.js";
 import defined from "./defined.js";
 import formatError from "./formatError.js";
 import RuntimeError from "./RuntimeError.js";
-import when from "../ThirdParty/when.js";
 
 /**
  * Provides details about an error that occurred in an {@link ImageryProvider} or a {@link TerrainProvider}.
@@ -76,7 +75,7 @@ function TileProviderError(
    * True if the failed operation should be retried; otherwise, false.  The imagery or terrain provider
    * will set the initial value of this property before raising the event, but any listeners
    * can change it.  The value after the last listener is invoked will be acted upon.
-   * @type {Boolean}
+   * @type {Boolean | Promise<void>}
    * @default false
    */
   this.retry = false;
@@ -124,7 +123,7 @@ TileProviderError.handleError = function (
   retryFunction,
   errorDetails
 ) {
-  var error = previousError;
+  let error = previousError;
   if (!defined(previousError)) {
     error = new TileProviderError(
       provider,
@@ -150,15 +149,14 @@ TileProviderError.handleError = function (
     event.raiseEvent(error);
   } else {
     console.log(
-      'An error occurred in "' +
-        provider.constructor.name +
-        '": ' +
-        formatError(message)
+      `An error occurred in "${provider.constructor.name}": ${formatError(
+        message
+      )}`
     );
   }
 
   if (error.retry && defined(retryFunction)) {
-    retryFunction(when(error.retry));
+    retryFunction(Promise.resolve(error.retry));
   }
 
   return error;

@@ -1,9 +1,10 @@
+/* This file is automatically rebuilt by the Cesium build process. */
+import { c as createCommonjsModule } from './_commonjsHelpers-3aae1032.js';
+
+var when = createCommonjsModule(function (module, exports) {
+/** @license MIT License (c) copyright B Cavalier & J Hann */
+
 /**
-  @license
-  when.js - https://github.com/cujojs/when
-
-  MIT License (c) copyright B Cavalier & J Hann
-
  * A lightweight CommonJS Promises/A and when() implementation
  * when is part of the cujo.js family of libraries (http://cujojs.com/)
  *
@@ -13,6 +14,7 @@
  * @version 1.7.1
  */
 
+(function(define) {define(function () {
 	var reduceArray, slice, undef;
 
 	//
@@ -110,7 +112,7 @@
 	 *   - promiseOrValue's value after it is fulfilled
 	 *   - promiseOrValue's reason after it is rejected
 	 * @param {*} promiseOrValue the rejected value of the returned {@link Promise}
-	 * @returns {Promise} rejected {@link Promise}
+	 * @return {Promise} rejected {@link Promise}
 	 */
 	function reject(promiseOrValue) {
 		return when(promiseOrValue, rejected);
@@ -134,7 +136,7 @@
 		 * Shortcut for .then(onFulfilledOrRejected, onFulfilledOrRejected, onProgress)
 		 * @param {function?} [onFulfilledOrRejected]
 		 * @param {function?} [onProgress]
-		 * @returns {Promise}
+		 * @return {Promise}
 		 */
 		always: function(onFulfilledOrRejected, onProgress) {
 			return this.then(onFulfilledOrRejected, onFulfilledOrRejected, onProgress);
@@ -143,7 +145,7 @@
 		/**
 		 * Register a rejection handler.  Shortcut for .then(undefined, onRejected)
 		 * @param {function?} onRejected
-		 * @returns {Promise}
+		 * @return {Promise}
 		 */
 		otherwise: function(onRejected) {
 			return this.then(undef, onRejected);
@@ -152,7 +154,7 @@
 		/**
 		 * Shortcut for .then(function() { return value; })
 		 * @param  {*} value
-		 * @returns {Promise} a promise that:
+		 * @return {Promise} a promise that:
 		 *  - is fulfilled if value is not a promise, or
 		 *  - if value is a promise, will fulfill with its value, or reject
 		 *    with its reason.
@@ -168,7 +170,7 @@
 		 * for the onFulfilled to be called with the array as its argument list
 		 * i.e. onFulfilled.spread(undefined, array).
 		 * @param {function} onFulfilled function to receive spread arguments
-		 * @returns {Promise}
+		 * @return {Promise}
 		 */
 		spread: function(onFulfilled) {
 			return this.then(function(array) {
@@ -185,7 +187,7 @@
 	 * @private
 	 *
 	 * @param {*} value
-	 * @returns {Promise} fulfilled promise
+	 * @return {Promise} fulfilled promise
 	 */
 	function fulfilled(value) {
 		var p = new Promise(function(onFulfilled) {
@@ -206,7 +208,7 @@
 	 * @private
 	 *
 	 * @param {*} reason
-	 * @returns {Promise} rejected promise
+	 * @return {Promise} rejected promise
 	 */
 	function rejected(reason) {
 		var p = new Promise(function(_, onRejected) {
@@ -228,7 +230,7 @@
 	 * then. The resolver has resolve, reject, and progress.  The promise
 	 * only has then.
 	 *
-	 * @returns {Deferred}
+	 * @return {Deferred}
 	 */
 	function defer() {
 		var deferred, promise, handlers, progressHandlers,
@@ -343,7 +345,7 @@
 		 * @param {function?} [onFulfilled] resolution handler
 		 * @param {function?} [onRejected] rejection handler
 		 * @param {function?} [onProgress] progress handler
-		 * @returns {Promise} new promise
+		 * @return {Promise} new promise
 		 */
 		function then(onFulfilled, onRejected, onProgress) {
 			// TODO: Promises/A+ check typeof onFulfilled, onRejected, onProgress
@@ -507,7 +509,7 @@
 
 	/**
 	 * Joins multiple promises into a single returned promise.
-	 * @returns {Promise} a promise that will fulfill when *all* the input promises
+	 * @return {Promise} a promise that will fulfill when *all* the input promises
 	 * have fulfilled, or will reject when *any one* of the input promises rejects.
 	 */
 	function join(/* ...promises */) {
@@ -734,4 +736,13 @@
 		return x;
 	}
 
-export default when;
+	return when;
+});
+})(function (factory) { (module.exports = factory())
+		;
+	}
+	// Boilerplate for AMD, Node, and browser global
+);
+});
+
+export { when as default };
