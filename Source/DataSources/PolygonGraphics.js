@@ -281,7 +281,7 @@ Object.defineProperties(PolygonGraphics.prototype, {
   /**
    * Gets or sets the {@link ClassificationType} Property specifying whether this polygon will classify terrain, 3D Tiles, or both when on the ground.
    * @memberof PolygonGraphics.prototype
-   * @type {Property|undefined}
+   * @type {Property|ClassificationType}
    * @default ClassificationType.BOTH
    */
   classificationType: createPropertyDescriptor("classificationType"),
