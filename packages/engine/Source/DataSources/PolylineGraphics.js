@@ -171,7 +171,7 @@ Object.defineProperties(PolylineGraphics.prototype, {
   /**
    * Gets or sets the {@link ClassificationType} Property specifying whether this polyline will classify terrain, 3D Tiles, or both when on the ground.
    * @memberof PolylineGraphics.prototype
-   * @type {Property|undefined}
+   * @type {Property|ClassificationType}
    * @default ClassificationType.BOTH
    */
   classificationType: createPropertyDescriptor("classificationType"),

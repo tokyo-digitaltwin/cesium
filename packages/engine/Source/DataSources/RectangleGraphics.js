@@ -234,7 +234,7 @@ Object.defineProperties(RectangleGraphics.prototype, {
   /**
    * Gets or sets the {@link ClassificationType} Property specifying whether this rectangle will classify terrain, 3D Tiles, or both when on the ground.
    * @memberof RectangleGraphics.prototype
-   * @type {Property|undefined}
+   * @type {Property|ClassificationType}
    * @default ClassificationType.BOTH
    */
   classificationType: createPropertyDescriptor("classificationType"),
