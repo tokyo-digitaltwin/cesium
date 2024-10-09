@@ -119,15 +119,14 @@
       </div>
     </div>
     <script id="cesium_sandcastle_script">
-      function startup(Cesium) {
+      window.startup = async function (Cesium) {
         "use strict";
         //Sandcastle_Begin
         const viewer = new Cesium.Viewer("cesiumContainer", {
-          terrainProvider: Cesium.createWorldTerrain({
+          terrain: Cesium.Terrain.fromWorldTerrain({
             requestVertexNormals: true, //Needed to visualize slope
           }),
         });
-        viewer.scene.globe.enableLighting = true;
 
         function getElevationContourMaterial() {
           // Creates a composite material with both elevation shading and contour lines
@@ -417,13 +416,15 @@
           ],
           "zoomButtons"
         );
-
         //Sandcastle_End
-        Sandcastle.finishedLoading();
-      }
+      };
       if (typeof Cesium !== "undefined") {
         window.startupCalled = true;
-        startup(Cesium);
+        window.startup(Cesium).catch((error) => {
+          "use strict";
+          console.error(error);
+        });
+        Sandcastle.finishedLoading();
       }
     </script>
   </body>
