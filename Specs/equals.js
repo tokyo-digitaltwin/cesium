@@ -1,4 +1,4 @@
-import { FeatureDetection } from "../Source/Cesium.js";
+import { FeatureDetection } from "@cesium/engine";
 
 function isTypedArray(o) {
   return FeatureDetection.typedArrayTypes.some(function (type) {
@@ -13,9 +13,9 @@ function typedArrayToArray(array) {
   return array;
 }
 
-function equals(util, customEqualiyTesters, a, b) {
+function equals(util, a, b) {
   a = typedArrayToArray(a);
   b = typedArrayToArray(b);
-  return util.equals(a, b, customEqualiyTesters);
+  return util.equals(a, b);
 }
 export default equals;

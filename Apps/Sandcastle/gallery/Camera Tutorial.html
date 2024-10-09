@@ -54,7 +54,7 @@
       </table>
     </div>
     <script id="cesium_sandcastle_script">
-      function startup(Cesium) {
+      window.startup = async function (Cesium) {
         "use strict";
         //Sandcastle_Begin
         const viewer = new Cesium.Viewer("cesiumContainer");
@@ -103,19 +103,19 @@
           flags.looking = false;
         }, Cesium.ScreenSpaceEventType.LEFT_UP);
 
-        function getFlagForKeyCode(keyCode) {
-          switch (keyCode) {
-            case "W".charCodeAt(0):
+        function getFlagForKeyCode(code) {
+          switch (code) {
+            case "KeyW":
               return "moveForward";
-            case "S".charCodeAt(0):
+            case "KeyS":
               return "moveBackward";
-            case "Q".charCodeAt(0):
+            case "KeyQ":
               return "moveUp";
-            case "E".charCodeAt(0):
+            case "KeyE":
               return "moveDown";
-            case "D".charCodeAt(0):
+            case "KeyD":
               return "moveRight";
-            case "A".charCodeAt(0):
+            case "KeyA":
               return "moveLeft";
             default:
               return undefined;
@@ -125,7 +125,7 @@
         document.addEventListener(
           "keydown",
           function (e) {
-            const flagName = getFlagForKeyCode(e.keyCode);
+            const flagName = getFlagForKeyCode(e.code);
             if (typeof flagName !== "undefined") {
               flags[flagName] = true;
             }
@@ -136,7 +136,7 @@
         document.addEventListener(
           "keyup",
           function (e) {
-            const flagName = getFlagForKeyCode(e.keyCode);
+            const flagName = getFlagForKeyCode(e.code);
             if (typeof flagName !== "undefined") {
               flags[flagName] = false;
             }
@@ -186,11 +186,14 @@
           }
         });
         //Sandcastle_End
-        Sandcastle.finishedLoading();
-      }
+      };
       if (typeof Cesium !== "undefined") {
         window.startupCalled = true;
-        startup(Cesium);
+        window.startup(Cesium).catch((error) => {
+          "use strict";
+          console.error(error);
+        });
+        Sandcastle.finishedLoading();
       }
     </script>
   </body>
